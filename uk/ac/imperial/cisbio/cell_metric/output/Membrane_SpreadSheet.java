@@ -22,39 +22,47 @@ import uk.ac.imperial.cisbio.imaging.cell_metric.gui.MembraneTool;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.MeasurementTool;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.NucleusTool;
 
+	/************************************************************/
+	/* MEMBRANE SPREADSHEET										*/
+	/* Writes the cell membrane spreadsheet 					*/
+	/************************************************************/
 
 public class Membrane_SpreadSheet {
 
-	
-		protected String fileName;
-		protected ExcelWriter excelWriter;
-		protected MembraneTool membraneTool;
+	/************************************************************/
+	/* INSTANCE VARIABLES										*/
+	/************************************************************/
+	protected String fileName;
+	protected ExcelWriter excelWriter;
+	protected MembraneTool membraneTool;
+
+	/************************************************************/
+	/* CONSTANTS												*/
+	/************************************************************/
+	private static final double CELL_DEFAULT_HEIGHT = 17;
+	private static final double CELL_DEFAULT_WIDTH = 64;
 		
-		private static final double CELL_DEFAULT_HEIGHT = 17;
-		private static final double CELL_DEFAULT_WIDTH = 64;
-		
-		
-		public Membrane_SpreadSheet(String fileName, MembraneTool tool){
+	/************************************************************/
+	/* CLASS CONSTRUCTOR										*/
+	/************************************************************/	
+	public Membrane_SpreadSheet(String fileName, MembraneTool tool){
 			this.fileName=fileName;
 			this.excelWriter=new ExcelWriter(fileName);	
 			this.membraneTool=tool;
 		}
 		
-		
-		public void makeMembraneSheet(){
-			try{
-				
-				
-				//Membrane_Collection mc = this.membraneTool.getMembraneCollection();
-				//Iterator<Cell_Membrane> itr = mc.iterator();
-				Cell_Membrane el = this.membraneTool.getCurrentMembrane();
-			    //for(int i=mc.size()-1;i>=0;i--){
-			    	
-			    	
-			    	//Cell_Membrane el = (Cell_Membrane)itr.next();
-			    	//Cell_Membrane el = (Cell_Membrane)mc.get(i);
-			    	if(el.getCorners().size()>0){
-					    	WritableSheet sheet=this.excelWriter.getNewSheet("# "+el.getNumber());
+	/************************************************************/
+	/* GENERAL METHODS											*/
+	/************************************************************/	
+	
+	/**
+	 * write spreadsheet for this membrane
+	 */
+	public void makeMembraneSheet(){
+		try{
+			Cell_Membrane el = this.membraneTool.getCurrentMembrane();
+			if(el.getCorners().size()>0){
+					    	WritableSheet sheet=this.excelWriter.getNewSheet("Cell # "+el.getNumber());
 					    	
 					    	BufferedImage cim=el.getCornerImage(membraneTool,1);
 							ByteArrayOutputStream cos = new ByteArrayOutputStream();   
@@ -66,20 +74,6 @@ public class Membrane_SpreadSheet {
 							ImageIO.write(cim, "PNG", cos); 
 							sheet.addImage(new WritableImage(22 + (cim.getWidth() / CELL_DEFAULT_WIDTH),0,cim.getWidth() / CELL_DEFAULT_WIDTH, cim.getHeight() / CELL_DEFAULT_HEIGHT,cos.toByteArray()));
 					    	
-							
-							/**cim=membraneTool.getECadherinThresholdImage();
-							cos = new ByteArrayOutputStream();   
-							ImageIO.write(cim, "PNG", cos); 
-							sheet.addImage(new WritableImage(20 + (cim.getWidth() / CELL_DEFAULT_WIDTH),0,cim.getWidth() / CELL_DEFAULT_WIDTH, cim.getHeight() / CELL_DEFAULT_HEIGHT,cos.toByteArray()));
-					    	
-							
-							MeasurementTool mt=((MeasurementTool)membraneTool.getMultiChannelImage().getMeasurementTool());
-							cim = mt.getMeasurementThresholdImage();
-							cos = new ByteArrayOutputStream();   
-							ImageIO.write(cim, "PNG", cos); 
-							sheet.addImage(new WritableImage(25 + (2 * (cim.getWidth() / CELL_DEFAULT_WIDTH)),0,cim.getWidth() / CELL_DEFAULT_WIDTH, cim.getHeight() / CELL_DEFAULT_HEIGHT,cos.toByteArray()));
-					    	**/
-							
 					    	this.excelWriter.addHeader(sheet, 0, 0, "Membrane #",false,ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addNumber(sheet, 1, 0, el.getNumber(),ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addHeader(sheet, 0, 1, "Area",false,ExcelWriter.NO_CORNER);
@@ -88,34 +82,34 @@ public class Membrane_SpreadSheet {
 					    	this.excelWriter.addNumber(sheet, 1, 2, el.getCircumference(),ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addHeader(sheet, 0, 3, "# Corners",false,ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addNumber(sheet, 1, 3, el.getCorners().size(),ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 0, 4, "ECadherin Threshold",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 0, 4, "Junction Marker 1 Threshold",false,ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addNumber(sheet, 1, 4, el.getECadherinThresholdAtMeasurement(),ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 0, 5, "Internal ECadherin Area (pixels)",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 0, 5, "Junction Marker 1 Area (pixels)",false,ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addNumber(sheet, 1, 5, el.getInternalECadherinArea(),ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 0, 6, "Measurement Channel Threshold",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 0, 6, "Junction Marker 2 Threshold",false,ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addNumber(sheet, 1, 6, el.getMeasurementThresholdAtMeasurement(),ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 0, 7, "Internal Measurement Channel Area (pixels)",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 0, 7, "Junction Marker 2 Area (pixels)",false,ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addNumber(sheet, 1, 7, el.getInternalActinArea(),ExcelWriter.NO_CORNER);
 					    	
 					    	int c=11;
-					    	this.excelWriter.addHeader(sheet, 0, c-1, "Junction Analysis",true,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 0, c-1, "Junction Marker 1 (JM1) analysis",true,ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addHeader(sheet, 0, c, "Corner #",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 1, c, "Paired With",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 2, c, "Interface contour",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 3, c, "Predicted interface length",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 4, c, "Interface linearity Index",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 5, c, "Fragmented Junction Length",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 6, c, "Coverage index",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 1, c, "Paired With #",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 2, c, "Interface Contour",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 3, c, "Interface Straight-line Length",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 4, c, "Interface Linearity Index",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 5, c, "JM1 Fragmented Junction Contour",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 6, c, "JM1 Coverage Index",false,ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addHeader(sheet, 7, c, "Dilation Cycles",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 8, c, "Interface area",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 9, c, "Ecadherin Area :within  Dilated Edge Area (pixels)",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 10, c, " % Interface occupancy",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 11, c, "Summed Ecad intensity",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 12, c, "Ecadherin intensity per interface area",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 13, c, "Cluster density",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 14, c, "Junction contour",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 15, c, "Predicted junction length",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 16, c, "Junction linearity",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 8, c, "Interface Area",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 9, c, "JM1 Area",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 10, c, "JM1 Interface Occupancy",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 11, c, "JM1 Intensity",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 12, c, "JM1 Intensity per Interface Area",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 13, c, "JM1 Cluster Density",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 14, c, "JM1 Junction Contour",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 15, c, "JM1 Junction Straight-line Length",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 16, c, "JM1 Junction Linearity index",false,ExcelWriter.NO_CORNER);
 					    	
 					    	c++;
 					    	Iterator<Cell_Membrane_Corner> citr = el.getCorners().iterator();
@@ -147,21 +141,21 @@ public class Membrane_SpreadSheet {
 					    	
 					    
 							c+=5;
-							this.excelWriter.addHeader(sheet, 0, c-1, "Label #2 analysis",true,ExcelWriter.NO_CORNER);
+							this.excelWriter.addHeader(sheet, 0, c-1, "Junction Marker 2 (JM2) analysis",true,ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addHeader(sheet, 0, c, "Corner #",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 1, c, "Paired With",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 2, c, "Interface contour",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 3, c, "Predicted interface length",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 4, c, "Interface linearity Index",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 5, c, "Fragmented Junction Length",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 6, c, "Label 2 Coverage",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 1, c, "Paired With #",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 2, c, "Interface Contour",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 3, c, "Interface Straight-line length",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 4, c, "Interface Linearity Index",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 5, c, "JM2 Fragmented Junction contour",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 6, c, "JM2 Coverage index",false,ExcelWriter.NO_CORNER);
 					    	this.excelWriter.addHeader(sheet, 7, c, "Dilation Cycles",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 8, c, "Interface area",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 9, c, "Label 2 Area :within  Dilated Edge Area (pixels)",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 10, c, " % Label 2 Area",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 11, c, "Summed Label 2 intensity",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 12, c, "Label 2 density along junction",false,ExcelWriter.NO_CORNER);
-					    	this.excelWriter.addHeader(sheet, 13, c, "Label 2 cluster density",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 8, c, "Interface Area",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 9, c, "JM2 Area",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 10, c, "JM2 Interface Occupancy",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 11, c, "JM2 Intensity",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 12, c, "JM2 Intensity per Interface Area",false,ExcelWriter.NO_CORNER);
+					    	this.excelWriter.addHeader(sheet, 13, c, "JM2 Cluster Density",false,ExcelWriter.NO_CORNER);
 					    	
 					    	c++;
 					    	citr = el.getCorners().iterator();
@@ -199,6 +193,10 @@ public class Membrane_SpreadSheet {
 			
 		}
 
+		/**
+		 * add images to spreadsheet first page
+		 * @throws Exception
+		 */
 		
 		private void addOverallImages() throws Exception{
 			WritableSheet sheet=this.excelWriter.getNewSheet("Membrane Image");	

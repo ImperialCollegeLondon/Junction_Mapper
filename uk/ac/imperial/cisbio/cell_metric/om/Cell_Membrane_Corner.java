@@ -9,6 +9,12 @@ import uk.ac.imperial.cisbio.cell_metric.utilities.ImageUtilities;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.MeasurementTool;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.MembraneTool;
 
+	/************************************************************/
+	/* CELL MEMBRANE CORNER										*/
+	/* Represents a corner of a cell 							*/
+	/************************************************************/
+
+
 public class Cell_Membrane_Corner {
 	
 	/************************************************************/
@@ -364,8 +370,15 @@ public class Cell_Membrane_Corner {
 	
 	/************************************************************/
 	/* IMAGE METHODS											*/
+	/* these methods return images for display in the interface */
 	/************************************************************/
 	
+	/**
+	 * Get corner edge image of this cell
+	 * @param panel
+	 * @return image
+	 * @throws Exception
+	 */
 	public BufferedImage getCornerEdgeImage(MembraneTool panel) throws Exception{
 		
 		BufferedImage target=this.membrane.getCornerImage(panel,1);
@@ -380,7 +393,7 @@ public class Cell_Membrane_Corner {
 	    itr = this.dilatedEdgePoints.iterator();
 	    while(itr.hasNext()) {
 	    	Point p = (Point)itr.next();
-	    	int[] pixel = target.getRaster().getPixel(p.x, p.y, new int[]{0,0,0});
+	    	//int[] pixel = target.getRaster().getPixel(p.x, p.y, new int[]{0,0,0});
 	    	if(!ImageUtilities.isInList(this.edgePoints, p))target.getRaster().setPixel(p.x, p.y, new int[]{0,255,0});
 	    }
 	    
@@ -397,12 +410,15 @@ public class Cell_Membrane_Corner {
 	    	if(!ImageUtilities.isInList(this.dilatedEdgePoints, p))target.getRaster().setPixel(p.x, p.y, new int[]{255,127,0});
 	    }
 	    
-	    
-	   
-		
 	    return target;
 	}
 	
+	/**
+	 * Get dilated edge image of this cell
+	 * @param panel
+	 * @return image
+	 * @throws Exception
+	 */
 	public BufferedImage getDilatedEdgeImage(int dilate) throws Exception{
 		BufferedImage target = new BufferedImage(this.membrane.collection.getXDim(), this.membrane.collection.getYDim(), BufferedImage.TYPE_BYTE_BINARY);
 		
@@ -420,6 +436,12 @@ public class Cell_Membrane_Corner {
 	}
 	
 	
+	/**
+	 * Get skeletonised edge image of this cell
+	 * @param panel
+	 * @return image
+	 * @throws Exception
+	 */
 	public BufferedImage getSkeletonisedECadherinEdgeImage() throws Exception{
 		BufferedImage target = new BufferedImage(this.membrane.collection.getXDim(), this.membrane.collection.getYDim(), BufferedImage.TYPE_BYTE_BINARY);
 		

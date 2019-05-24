@@ -9,6 +9,10 @@ import java.util.Iterator;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.MembraneTool;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.NucleusTool;
 
+	/************************************************************/
+	/* COLLECTION OF CELL MEMBRANES								*/
+	/************************************************************/
+
 public class Membrane_Collection extends ArrayList<Cell_Membrane> {
 	
 	/************************************************************/
@@ -61,6 +65,13 @@ public class Membrane_Collection extends ArrayList<Cell_Membrane> {
 	}
 	
 	
+	/**
+	 * 
+	 * @param numbered
+	 * @param panel
+	 * @return
+	 */
+	
 	public BufferedImage getMembraneImage(boolean numbered, MembraneTool panel){
 		
 		BufferedImage target = new BufferedImage(this.getXDim(), this.getYDim(), BufferedImage.TYPE_3BYTE_BGR);
@@ -83,7 +94,11 @@ public class Membrane_Collection extends ArrayList<Cell_Membrane> {
 		
 	}
 	
-
+	/**
+	 * get membrane that contains a point
+	 * @param p
+	 * @return
+	 */
 	public Cell_Membrane getSelectedMembrane(Point p){
 		Iterator<Cell_Membrane> itr = this.iterator();
 	    while(itr.hasNext()) {
@@ -93,7 +108,11 @@ public class Membrane_Collection extends ArrayList<Cell_Membrane> {
 	    return null;
 	}
 	
-	
+	/**
+	 * is a point a part of a cell membrane?
+	 * @param p
+	 * @return
+	 */
 	public boolean isPartofMembrane(Point p){
 		Iterator<Cell_Membrane> itr = this.iterator();
 	    while(itr.hasNext()) {

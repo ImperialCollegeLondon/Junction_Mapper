@@ -25,10 +25,16 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
 
-
+/************************************************************/
+/* PDFWriter												*/
+/* Class to make PDF Document								*/
+/************************************************************/
 public class PDFWriter {
 
 
+	/************************************************************/
+	/* STATIC METHODS - PUBLIC									*/
+	/************************************************************/
 	
 	public static void writeDocument(MembraneTool tool){
 		Document document	 = new Document(PageSize.A4.rotate());
@@ -97,11 +103,7 @@ public class PDFWriter {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-		
-			
-            
-            
+			}     
             
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
@@ -122,6 +124,9 @@ public class PDFWriter {
 		
 	}
 	
+	/************************************************************/
+	/* STATIC METHODS - PRIVATE									*/
+	/************************************************************/
 	
 	private static BufferedImage resize(BufferedImage image1,int width){
 		

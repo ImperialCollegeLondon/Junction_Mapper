@@ -11,12 +11,25 @@ import java.awt.print.*;
 import javax.media.jai.*;
 import com.sun.media.jai.codec.*;
 
+
+/************************************************************/
+/* ImagePrinter												*/
+/* Print image on a PDF document 							*/
+/* Code taken from the web									*/
+/************************************************************/
+
 public class ImagePrinter implements Printable {
+	
+	/************************************************************/
+	/* INSTANCE VARIABLES										*/
+	/************************************************************/
    protected RenderedImage renderedImage;
    protected int imageWidth, imageHeight;
    protected Point printLoc = new Point(0,0);
    
-
+   	/************************************************************/
+	/* UTILITY METHODS											*/
+	/************************************************************/
    public void setPrintLocation(Point d) {
        printLoc = d;
    }

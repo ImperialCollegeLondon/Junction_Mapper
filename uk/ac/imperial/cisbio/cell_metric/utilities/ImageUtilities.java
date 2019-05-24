@@ -171,87 +171,7 @@ public class ImageUtilities  {
 		}
 	  
 	  
-	  /**public static Vector sobelOperator(BufferedImage image)throws Exception {
-			BufferedImage target=ImageUtilities.copyImage(image);	
-			int width=image.getRaster().getWidth();
-			int height=image.getRaster().getHeight();
-			float[] GY = new float[width*height];
-			float[] GX = new float[width*height];
-			int[] total = new int[width*height];
-			float[] template={-1,0,1,-2,0,2,-1,0,1};;
-			//float[] template={-1,-2,-1,0,0,0,1,2,1};;
-			int templateSize=3;
-			int sum=0;
-			int max=0;
-		
-			for(int x=(templateSize-1)/2; x<width-(templateSize+1)/2;x++) {
-				for(int y=(templateSize-1)/2; y<height-(templateSize+1)/2;y++) {
-					sum=0;
-		
-					for(int x1=0;x1<templateSize;x1++) {
-						for(int y1=0;y1<templateSize;y1++) {
-							int x2 = (x-(templateSize-1)/2+x1);
-							int y2 = (y-(templateSize-1)/2+y1);
-							
-							int[] pv=image.getRaster().getPixel(x2, y2, new int[]{0});
-							float value = (pv[0] & 0xff) * (template[y1*templateSize+x1]);
-							sum += value;
-						}
-					}
-					GY[y*width+x] = sum;
-					
-					sum=0;
-					for(int x1=0;x1<templateSize;x1++) {
-						for(int y1=0;y1<templateSize;y1++) {
-							int x2 = (x-(templateSize-1)/2+x1);
-							int y2 = (y-(templateSize-1)/2+y1);
-							int[] pv=image.getRaster().getPixel(x2, y2, new int[]{0});
-							float value = (pv[0] & 0xff) * (template[x1*templateSize+y1]);
-							sum += value;
-						}
-					}
-					GX[y*width+x] = sum;
-		
-				}
-			}
-			
-			double[][] theta=new double[width][height];
-			for(int x=0; x<width;x++) {
-				for(int y=0; y<height;y++) {
-					total[y*width+x]=(int)Math.sqrt(GX[y*width+x]*GX[y*width+x]+GY[y*width+x]*GY[y*width+x]);
-					//theta[x][y]=Math.toDegrees(Math.atan2(GX[y*width+x],GY[y*width+x]));
-					if(GX[y*width+x]==0.0){
-						if(GY[y*width+x]==0.0)theta[x][y]=0.0;
-						else theta[x][y]=90.0;
-					}
-					else theta[x][y]=Math.toDegrees(Math.atan(Math.abs(GY[y*width+x])/Math.abs(GX[y*width+x])));
-					//direction[y*width+x] = Math.atan2(GX[y*width+x],GY[y*width+x]);
-					if(max<total[y*width+x])
-						max=total[y*width+x];
-				}
-			}
-			float ratio=(float)max/255;
-			
-			
-			
-			for(int x=0; x<width;x++) {
-				for(int y=0; y<height;y++) {
-					sum=(int)(total[y*width+x]/ratio);
-					int pv = 0xff000000 | ((int)sum << 16 | (int)sum << 8 | (int)sum);
-					target.getRaster().setPixel(x,y, new int[]{pv});
-				}
-			}
-			
-			Vector v=new Vector();
-			v.add(target);
-			v.add(theta);
-			
-			return v;
-			}
-	  **/
 	 
-	
-	
 	/**
 	 * Cannny Operator
 	 * 
@@ -398,11 +318,15 @@ public class ImageUtilities  {
 	 
 	 
 	 
-	
-	
-	
+	/**
+	 * Get thresholded image
+	 * @param image
+	 * @param lowThreshold
+	 * @param highThreshold
+	 * @return thresholded image
+	 */
+
 	public static BufferedImage getThresholdImage(BufferedImage image,int lowThreshold, int highThreshold){	
-		int c=0;
 		BufferedImage target = copyImage(image);
 		WritableRaster raster=image.getRaster();
 		WritableRaster targetRaster=target.getRaster();
@@ -421,9 +345,9 @@ public class ImageUtilities  {
 	
 	
 	  /**
-	   * return thresholded image
+	   * return adaptive thresholded image
 	   * @param image, kernal size, addition to mean
-	   * @return eroded image
+	   * @return thresholded image
 	   */
 	  public static BufferedImage getAdaptiveThresholdImage(BufferedImage image,int kernelSize,int cValue){	
 			int c=0;
@@ -493,7 +417,14 @@ public class ImageUtilities  {
 			
 		}
 	  
-	  
+	 /**
+	  * Skeletonise image 
+	  * apply masks until image reaches idempotence 
+	  * @param image
+	  * @param panel
+	  * @return
+	  * @throws Exception
+	  */
 	  
 	  public static BufferedImage getSkeletonImage(BufferedImage image,ImagePanel panel) throws Exception{ 
 		  if(image.getType()!=BufferedImage.TYPE_BYTE_BINARY) throw new Exception("Cannot Skeletonise : Image is not Binary");
@@ -576,6 +507,13 @@ public class ImageUtilities  {
 			
 		}
 	  
+	  /**
+	   * Are the two images identical?
+	   * @param im1
+	   * @param im2
+	   * @return true:false
+	   * @throws Exception
+	   */
 	  
 	  private static boolean sameImage(BufferedImage im1, BufferedImage im2) throws Exception{
 		  
@@ -596,6 +534,14 @@ public class ImageUtilities  {
 		  
 	  }
 	  
+	  /**
+	   * Count neighbours=1 in binary image
+	   * @param im
+	   * @param x
+	   * @param y
+	   * @return
+	   */
+	  
 	  public static int getNeighbours(BufferedImage im,int x, int y){
 		  int cnt=0;
 		  
@@ -611,6 +557,13 @@ public class ImageUtilities  {
 		  return cnt;
 	  }
 	  
+	  /**
+	   * Count zero / one patterns for skeletinisation algorithm
+	   * @param im
+	   * @param x
+	   * @param y
+	   * @return
+	   */
 	  private static int getZeroOnePatterns(BufferedImage im,int x, int y){
 		  int cnt=0;
 		  
@@ -626,6 +579,9 @@ public class ImageUtilities  {
 		  return cnt;
 	  }
 	  
+	  /*******************************************************************/
+	  /* Binary image get individual pixel methods						 */
+	  /*******************************************************************/
 	  public static boolean getNWPixel(BufferedImage im,int x, int y){		  
 		  if(x>0&&y>0){
 			  int pix[]=im.getRaster().getPixel(x-1, y-1, new int[]{0});
@@ -1185,6 +1141,12 @@ public class ImageUtilities  {
 		}
 		
 		
+		/**
+		 * scaleImage intensity to 0-255 range
+		 * @param image
+		 * @return
+		 * @throws Exception
+		 */
 		public static BufferedImage scaleImage(BufferedImage image) throws Exception{
 			BufferedImage target=ImageUtilities.copyImage(image);
 			
@@ -1267,7 +1229,12 @@ public class ImageUtilities  {
 		}
 		
 		
-		
+		/**
+		 * Superimpose binary image on a greyscale image
+		 * @param binaryImage
+		 * @param greyScaleImage
+		 * @return
+		 */
 		public static BufferedImage superImposeImage(BufferedImage binaryImage, BufferedImage greyScaleImage){
 			
 			BufferedImage target=new BufferedImage(binaryImage.getWidth(),binaryImage.getHeight(),BufferedImage.TYPE_3BYTE_BGR);
@@ -1287,7 +1254,11 @@ public class ImageUtilities  {
 			return target;
 		}
 		
-		
+		/**
+		 * turn a greyscale binary image into a binary image
+		 * @param greyScaleImage
+		 * @return
+		 */
 		public static BufferedImage reverseSuperImposeImage(BufferedImage greyScaleImage){
 			
 			BufferedImage target=new BufferedImage(greyScaleImage.getWidth(),greyScaleImage.getHeight(),BufferedImage.TYPE_BYTE_BINARY);
@@ -1298,14 +1269,19 @@ public class ImageUtilities  {
 					int binaryValue1=greyScaleImage.getRaster().getPixel(i, j, new int[]{0,0,0})[0];
 					int binaryValue2=greyScaleImage.getRaster().getPixel(i, j, new int[]{0,0,0})[1];
 					int binaryValue3=greyScaleImage.getRaster().getPixel(i, j, new int[]{0,0,0})[2];
-					if(binaryValue1==255&&binaryValue2==255&&binaryValue3==255)targetRaster.setPixel(i, j, new int[]{ 1});
+					if(binaryValue1==255&&binaryValue2==255&&binaryValue3==255)targetRaster.setPixel(i, j, new int[]{1});
 					else targetRaster.setPixel(i, j, new int[]{0});	
 				}
 			
 			return target;
 		}
 		
-		
+		/**
+		 * Combine images into a RGB image
+		 * @param edgeImage
+		 * @param nucleusImage
+		 * @return
+		 */
 		public static BufferedImage combineImage(BufferedImage edgeImage,BufferedImage nucleusImage){
 			
 			BufferedImage target=new BufferedImage(edgeImage.getWidth(),edgeImage.getHeight(),BufferedImage.TYPE_3BYTE_BGR);

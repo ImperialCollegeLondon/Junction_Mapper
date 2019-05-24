@@ -16,11 +16,16 @@ import uk.ac.imperial.cisbio.cell_metric.om.Intra_Cell_Distance;
 import uk.ac.imperial.cisbio.cell_metric.om.Nucleus_Collection;
 import uk.ac.imperial.cisbio.cell_metric.utilities.ExcelWriter;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.NucleusTool;
-
+/************************************************************/
+/* Nucleus_Spreadsheet										*/
+/* Creates spreadsheet about cell nucleus					*/
+/************************************************************/
 
 public class Nucleus_SpreadSheet {
 
-	
+		/************************************************************/
+		/* INSTANCE VARIABLES										*/
+		/************************************************************/
 		protected String fileName;
 		protected ExcelWriter excelWriter;
 		protected NucleusTool nucleusTool;
@@ -28,7 +33,9 @@ public class Nucleus_SpreadSheet {
 		private static final double CELL_DEFAULT_HEIGHT = 17;
 		private static final double CELL_DEFAULT_WIDTH = 64;
 		
-		
+		/************************************************************/
+		/* CLASS CONSTRUCTOR										*/
+		/************************************************************/
 		public Nucleus_SpreadSheet(String fileName, NucleusTool tool){
 			this.fileName=fileName;
 			this.excelWriter=new ExcelWriter(fileName);	
@@ -36,6 +43,9 @@ public class Nucleus_SpreadSheet {
 		}
 		
 		
+		/************************************************************/
+		/* CREATE SPREADSHEET METHOD								*/
+		/************************************************************/
 		public void makeNucleusSheet(){
 			try{
 				

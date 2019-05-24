@@ -20,8 +20,17 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
+
+/************************************************************/
+/* EXCEL WRITER												*/
+/* generalised class for writing excel spreadsheets 		*/
+/************************************************************/
+
 public class ExcelWriter {
 	
+	/************************************************************/
+	/* CONSTANTS												*/
+	/************************************************************/
 	public final static int NO_CORNER=0;
 	public final static int TOP_LEFT=1;
 	public final static int TOP_RIGHT=2;
@@ -32,6 +41,9 @@ public class ExcelWriter {
 	public final static int LEFT=7;
 	public final static int RIGHT=8;
 	
+	/************************************************************/
+	/* INSTANCE VARIABLES										*/
+	/************************************************************/
 	private WritableWorkbook workbook;
 	private WritableFont font = new WritableFont(WritableFont.ARIAL, 8);
 	private WritableFont boldFont = new WritableFont(WritableFont.ARIAL, 8, WritableFont.BOLD, false,UnderlineStyle.NO_UNDERLINE);
@@ -59,7 +71,9 @@ public class ExcelWriter {
 	
 	private WritableCellFormat bigBoldCellFormat;
 	
-	
+	/************************************************************/
+	/* CLASS CONSTRUCTOR										*/
+	/************************************************************/
 	public ExcelWriter(String fileName){
 		WorkbookSettings wbSettings = new WorkbookSettings();
 		wbSettings.setLocale(new Locale("en", "EN"));
@@ -130,7 +144,13 @@ public class ExcelWriter {
 	
 	}
 	
+	/************************************************************/
+	/* OTHER METHODS											*/
+	/************************************************************/
 	
+	/**
+	 * write the workbook
+	 */
 	public void writeFile(){
 	try{
 		workbook.write();
@@ -141,11 +161,16 @@ public class ExcelWriter {
 	}
 	}
 	
-	
+	/************************************************************/
+	/* ACCESSOR METHOD											*/
+	/************************************************************/
 	public WritableWorkbook getWorkbook(){
 		return this.workbook;
 	}
 	
+	/************************************************************/
+	/* OTHER METHODS											*/
+	/************************************************************/
 	public WritableSheet getNewSheet(String name){	
 		boolean done=false;
 		int c=1;

@@ -15,6 +15,11 @@ import uk.ac.imperial.cisbio.imaging.cell_metric.gui.MembraneTool;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.NucleusTool;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.MeasurementTool;
 
+	/************************************************************/
+	/* CELL MEMBRANE CORNER										*/
+	/* Represents a cell 										*/
+	/************************************************************/
+
 public class Cell_Membrane {
 
 	/************************************************************/
@@ -120,6 +125,11 @@ public class Cell_Membrane {
 		return this.edgePixels;
 	}
 	
+	/**
+	 *  Construct ordered edge map of edge pixels
+	 * @param mt
+	 */
+	
 	public void sortEdgePixels(MembraneTool mt){
 		ArrayList<Point> newEdge = new ArrayList<Point>();
 		
@@ -154,6 +164,13 @@ public class Cell_Membrane {
 		this.edgePixels=newEdge;
 		
 	}
+	
+	/**
+	 * Is pixel part of an edge
+	 * @param p
+	 * @param dir
+	 * @return
+	 */
 	
 	private Point isEdgePixel(Point p, int dir){
 		Point px;
@@ -496,40 +513,6 @@ public class Cell_Membrane {
 	
 	
 	
-	private Color getRandomColor(){
-		return new Color((int)Math.floor(Math.random()*256),
-					(int)Math.floor(Math.random()*256),
-					(int)Math.floor(Math.random()*256));
-	}
-	
-	
-	private int getShortestDistance(Point p1, Point p2){
-		
-		int c1=0,c2=0;
-		boolean startCount=false;
-		boolean stopCount=false;
-		
-		for(int i=0;i<this.edgePixels.size();i++){
-			Point p = this.edgePixels.get(i);		
-			if(p.x==p1.x&&p.y==p1.y)startCount=true;
-			if(p.x==p2.x&&p.y==p2.y)stopCount=true;
-			if(startCount&&!stopCount)c1++;		
-		}
-		
-		
-		startCount=false;
-		stopCount=false;
-		for(int i=this.edgePixels.size()-1;i>=0;i--){
-			Point p = this.edgePixels.get(i);		
-			if(p.x==p1.x&&p.y==p1.y)startCount=true;
-			if(p.x==p2.x&&p.y==p2.y)stopCount=true;
-			if(startCount&&!stopCount)c2++;		
-		}
-		
-		return c1<c2? c1 : c2;
-		
-	}
-	
 	public void getCornerDistances(MembraneTool tool) throws Exception{
 		Iterator<Cell_Membrane_Corner> itr = this.corners.iterator();
 	    while(itr.hasNext()) {
@@ -661,7 +644,7 @@ public class Cell_Membrane {
 		
 		BufferedImage target = new BufferedImage(this.collection.getXDim(), this.collection.getYDim(), BufferedImage.TYPE_3BYTE_BGR);
 		
-		BufferedImage image=image=panel.getOriginalImage();
+		BufferedImage image=panel.getOriginalImage();
 		if(measurementChannel==0)image=((MeasurementTool)(panel.getMultiChannelImage().getMeasurementTool())).getMeasurementThresholdImage();
 		else if(measurementChannel==1)image=panel.getECadherinThresholdImage();
 		//else if(measurementChannel==2)image=panel.getOriginalImage();

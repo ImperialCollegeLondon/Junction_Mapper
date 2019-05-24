@@ -4,10 +4,17 @@ import java.io.File;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import javax.swing.filechooser.FileFilter;
-
+/************************************************************/
+/* EXTENSION FILE FILTER									*/
+/* Makes a file filter that only shows chosen extensions 	*/
+/* This code was taken from the web.						*/
+/************************************************************/
 
 public class ExtensionFileFilter extends FileFilter
 {
+	/************************************************************/
+	/* INSTANCE VARIABLES										*/
+	/************************************************************/
     protected String    desc;
     protected boolean   allowDirs;
     protected Hashtable extensions;
@@ -16,12 +23,18 @@ public class ExtensionFileFilter extends FileFilter
     {
         extensions = new Hashtable();
     }
-
+    
+    /************************************************************/
+	/* CLASS CONSTRUCTOR										*/
+	/************************************************************/
     public ExtensionFileFilter(boolean f)
     {
         allowDirs = f;
     }
-
+    
+    /************************************************************/
+	/* UTILITY METHODS											*/
+	/************************************************************/
     public void addExtension(String ext, boolean f)
     {
         if(f)

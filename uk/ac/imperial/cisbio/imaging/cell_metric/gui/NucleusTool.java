@@ -172,10 +172,10 @@ public class NucleusTool extends ToolPanel {
 			this.clickedOnObjects.setXDim(this.image.getImage().getWidth());
 			this.clickedOnObjects.setYDim(this.image.getImage().getHeight());
 			
-			this.componentPanel.add(new JLabel("Step 3 : Measure Intra Cell Distance"));
+			this.componentPanel.add(new JLabel("Step 3 : Measure Inter Cell Distance"));
 			
-			meanButton= new JButton("Set # Intra Cells");
-			meanButton.setToolTipText("Set the number of cells to get the intracell distance");
+			meanButton= new JButton("Set # Cells");
+			meanButton.setToolTipText("Set the number of cells to get the intercell distance");
 			meanButton.addMouseListener(new ButtonListener());
 			this.componentPanel.add(meanButton);
 			
@@ -250,7 +250,7 @@ public class NucleusTool extends ToolPanel {
 			String s = (String)JOptionPane.showInputDialog(
 				                    this,
 				                    "Select the number of closest cells that you want to measure:",
-				                    "Get Intra Nucleus Distance",
+				                    "Get Inter Nucleus Distance",
 				                    JOptionPane.PLAIN_MESSAGE,
 				                    null,
 				                    possibilities,

@@ -168,6 +168,12 @@ public class Cell_Metric_Tool extends JFrame{
 			  
 		}
 		
+		/**
+		 * Global exception handler
+		 * Unhandled exceptions thrown up to this method
+		 * @param e
+		 */
+		
 		public void handleException(Exception e){
 			JOptionPane.showMessageDialog(this, e.toString(), "ERROR : Exception Thrown", JOptionPane.ERROR_MESSAGE);
 	        e.printStackTrace();   
@@ -178,6 +184,10 @@ public class Cell_Metric_Tool extends JFrame{
 		/* INTERFACE METHODS																	*/
 		/****************************************************************************************/
 		
+		/**
+		 * append text to scrolling text area at bottom of interface
+		 * @param s : text to be appended
+		 */
 		
 		public void setTextArea(String s){
 			//final String st=s;
@@ -295,7 +305,7 @@ public class Cell_Metric_Tool extends JFrame{
 		
 		
 		/****************************************************************************************/
-		/* LOAD IN AN IMAGE WELL																*/
+		/* THREAD TO LOAD IN A SINGLE IMAGE FILE												*/
 		/****************************************************************************************/
 		class loadSingleFile implements Runnable{
 		
@@ -349,37 +359,6 @@ public class Cell_Metric_Tool extends JFrame{
 					}
 				}
 		}
-		
-		
-		
-		
-		
-		
-		/****************************************************************************************/
-		/* PROCESS PLATE THREAD																	*/
-		/****************************************************************************************/
-		
-		
-		
-		
-	private void selectCurrentDirectory(){
-		JFileChooser chooser=new JFileChooser(".",FileSystemView.getFileSystemView());
-        chooser.setDialogTitle("Select a file from the directory containing the images you want to work on.");
-        int returnVal = chooser.showOpenDialog(Cell_Metric_Tool.this); 
-        if(returnVal == JFileChooser.APPROVE_OPTION) {	
-        	currentDirectory = chooser.getCurrentDirectory();
-        }
-        
-	}
-	
-	
-	
-	/****************************************************************************************/
-	/* OTHER INTERNAL CLASSES																*/
-	/****************************************************************************************/
-	
-	
-		
 		
 
 }

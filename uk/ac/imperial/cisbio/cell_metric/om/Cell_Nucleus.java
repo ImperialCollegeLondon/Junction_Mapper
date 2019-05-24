@@ -197,7 +197,7 @@ public class Cell_Nucleus {
 	    	Cell_Nucleus c=d.getToCell();
 	    	Point pc=c.getGeometricMean();
 	    	g.drawLine(p1.x, p1.y, pc.x, pc.y);
-	    	if(panel!=null)panel.getTool().setTextArea("Intra Cell Distance : Cell "+this.getNumber()+" to Cell "+c.getNumber()+" :: "+d.getDistance()+"\n");
+	    	if(panel!=null)panel.getTool().setTextArea("Inter Cell Distance : Cell "+this.getNumber()+" to Cell "+c.getNumber()+" :: "+d.getDistance()+"\n");
 	    	i++;
 	    	if(i==panel.getNumIntraCells())break;
 	    }

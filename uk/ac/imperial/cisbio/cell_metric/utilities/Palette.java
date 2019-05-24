@@ -2,6 +2,10 @@ package uk.ac.imperial.cisbio.cell_metric.utilities;
 
 import java.awt.Color;
 
+/************************************************************/
+/*Pallete Class - contains colours							*/
+/************************************************************/
+
 public class Palette {
 	
 	 //reds and derivatives
