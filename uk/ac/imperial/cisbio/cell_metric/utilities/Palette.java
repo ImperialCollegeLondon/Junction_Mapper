@@ -3,7 +3,7 @@ package uk.ac.imperial.cisbio.cell_metric.utilities;
 import java.awt.Color;
 
 /************************************************************/
-/*Pallete Class - contains colours							*/
+/* Pallete Class - contains colours as constants			*/
 /************************************************************/
 
 public class Palette {

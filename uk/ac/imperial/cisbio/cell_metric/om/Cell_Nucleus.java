@@ -112,6 +112,25 @@ public class Cell_Nucleus {
 	    return false;
 	}
 	
+	/**
+	 * calculate inter cell distances from this cell
+	 */
+	public void calculateIntraCellDistances(){
+		ArrayList<Cell_Nucleus> otherCells=this.collection.getOtherNucleusObjects(this);
+		Point p1=this.getGeometricMean();
+		Iterator<Cell_Nucleus> itr = otherCells.iterator();
+		this.intraCellularDistances.clear();
+	    while(itr.hasNext()) {
+	    	Cell_Nucleus c = (Cell_Nucleus)itr.next();
+	    	Point p2=c.getGeometricMean();
+	    	double dist=Math.sqrt(Math.pow((p1.getY()-p2.getY()),2.0)+Math.pow((p1.getX()-p2.getX()),2.0));
+	    	this.intraCellularDistances.add(new Intra_Cell_Distance(this,c,dist));    	
+	    }
+	    
+	    Collections.sort(this.intraCellularDistances, new Intra_Cell_Comparator());
+	   
+	}
+	
 	/************************************************************/
 	/* IMAGE METHODS											*/
 	/************************************************************/
@@ -139,6 +158,12 @@ public class Cell_Nucleus {
 	   return target;
 	}
 	
+	/**
+	 * return cell image with coloured numbered nucleii
+	 * @param numbered
+	 * @param image
+	 * @return
+	 */
 	
 	public BufferedImage getCombinedImage(boolean numbered, BufferedImage image){
 		BufferedImage target=null;
@@ -166,21 +191,11 @@ public class Cell_Nucleus {
 	}
 	
 
-	public void calculateIntraCellDistances(){
-		ArrayList<Cell_Nucleus> otherCells=this.collection.getOtherNucleusObjects(this);
-		Point p1=this.getGeometricMean();
-		Iterator<Cell_Nucleus> itr = otherCells.iterator();
-		this.intraCellularDistances.clear();
-	    while(itr.hasNext()) {
-	    	Cell_Nucleus c = (Cell_Nucleus)itr.next();
-	    	Point p2=c.getGeometricMean();
-	    	double dist=Math.sqrt(Math.pow((p1.getY()-p2.getY()),2.0)+Math.pow((p1.getX()-p2.getX()),2.0));
-	    	this.intraCellularDistances.add(new Intra_Cell_Distance(this,c,dist));    	
-	    }
-	    
-	    Collections.sort(this.intraCellularDistances, new Intra_Cell_Comparator());
-	   
-	}
+	/**
+	 * Distance image between different nucleii
+	 * @param panel
+	 * @return
+	 */
 
 
 	public BufferedImage getDistanceImage(NucleusTool panel){

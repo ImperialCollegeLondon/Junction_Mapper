@@ -16,7 +16,7 @@ import uk.ac.imperial.cisbio.imaging.cell_metric.gui.NucleusTool;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.MeasurementTool;
 
 	/************************************************************/
-	/* CELL MEMBRANE CORNER										*/
+	/* CELL MEMBRANE 											*/
 	/* Represents a cell 										*/
 	/************************************************************/
 
