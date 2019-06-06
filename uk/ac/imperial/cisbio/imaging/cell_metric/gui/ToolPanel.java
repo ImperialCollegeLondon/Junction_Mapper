@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import uk.ac.imperial.cisbio.cell_metric.Cell_Metric_Tool;
 import uk.ac.imperial.cisbio.cell_metric.utilities.ImageUtilities;
+import uk.ac.imperial.cisbio.imaging.cell_metric.gui.ImagePanel;
 
 public abstract class ToolPanel extends JPanel {
 	

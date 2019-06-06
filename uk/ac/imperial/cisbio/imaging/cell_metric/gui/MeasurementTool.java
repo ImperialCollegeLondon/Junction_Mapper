@@ -70,7 +70,7 @@ public class MeasurementTool extends ToolPanel {
 	/* ACCESSOR METHODS											*/
 	/************************************************************/
 	public void setImage(BufferedImage im){
-		image.setImage(im);
+		this.image.setImage(im);
 		
 	}
 	

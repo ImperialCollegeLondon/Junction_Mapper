@@ -21,11 +21,11 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileSystemView;
 
-import uk.ac.imperial.cisbio.cell_metric.utilities.Defaults;
-import uk.ac.imperial.cisbio.cell_metric.utilities.ExtensionFileFilter;
-import uk.ac.imperial.cisbio.cell_metric.utilities.Palette;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.MultiChannelImage;
 import uk.ac.imperial.cisbio.imaging.cell_metric.gui.Params_Dialog;
+import uk.ac.imperial.cisbio.cell_metric.utilities.Palette;
+import uk.ac.imperial.cisbio.cell_metric.utilities.Defaults;
+import uk.ac.imperial.cisbio.cell_metric.utilities.ExtensionFileFilter;
 
 
 
@@ -38,9 +38,9 @@ public class Cell_Metric_Tool extends JFrame{
 		/****************************************************************************************/
 		public final static String TITLE="Junction Mapper";
 		
-		public final static String EDGE="Edge";
+		public final static String EDGE="Junction 1 Channel";
 		public final static String NUCLEUS="Nucleus";
-		public final static String MEASUREMENT="Measurement";
+		public final static String MEASUREMENT="Junction 2 Channel";
 		public final static String NOT_USED="Not used";
 		
 		/****************************************************************************************/

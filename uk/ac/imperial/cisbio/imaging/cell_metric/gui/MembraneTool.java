@@ -294,10 +294,10 @@ public class MembraneTool extends ToolPanel  {
 		     slider.setPaintTrack(true);
 		     slider.setValue(0);
 		     cValue=0;
-		     slider.setToolTipText("Epsilon value");
+		     slider.setToolTipText("Epsilon Value");
 			 componentPanel.add(slider);
 			 slider.addChangeListener(new EpsilonChangeListener());
-			 this.componentPanel.add(new JLabel("Epsilon Value for Corner Detection"));
+			 this.componentPanel.add(new JLabel("Epsilon Value"));
 				
 			 
 			 slider = new JSlider();
@@ -312,7 +312,7 @@ public class MembraneTool extends ToolPanel  {
 		     slider.setToolTipText("Number of dilations applied to edge");
 			 componentPanel.add(slider);
 			 slider.addChangeListener(new DilatedEdgeListener());
-			 this.componentPanel.add(new JLabel("Number of Dilations applied to edge"));
+			 this.componentPanel.add(new JLabel("# Dilations applied to edge"));
 			 
 			 slider = new JSlider();
 		     slider.setMinimum(0);
@@ -323,10 +323,10 @@ public class MembraneTool extends ToolPanel  {
 		     slider.setPaintLabels(true);
 		     slider.setPaintTrack(true);
 		     slider.setValue(this.eCadherinThreshold);
-		     slider.setToolTipText("E-Cadherin Threshold value");
+		     slider.setToolTipText("Junction 1 Threshold value");
 			 componentPanel.add(slider);
 			 slider.addChangeListener(new ThresholdChangeListener());
-			 this.eCadherinThresholdLabel=new JLabel("E-Cadherin Threshold : "+slider.getValue());
+			 this.eCadherinThresholdLabel=new JLabel("Junction 1 Threshold : "+slider.getValue());
 			 this.componentPanel.add(this.eCadherinThresholdLabel);
 			 
 			 MeasurementTool mt=((MeasurementTool)MembraneTool.this.getMultiChannelImage().getMeasurementTool());
@@ -339,10 +339,10 @@ public class MembraneTool extends ToolPanel  {
 		     slider.setPaintLabels(true);
 		     slider.setPaintTrack(true);
 		     slider.setValue(mt.getMeasurementThreshold());
-		     slider.setToolTipText("Measurement Channel Threshold value");
+		     slider.setToolTipText("Junction 2 Threshold value");
 			 componentPanel.add(slider);
 			 slider.addChangeListener(new MeasurementChangeListener());
-			 this.measurementThresholdLabel=new JLabel("Measurement Threshold : "+slider.getValue());
+			 this.measurementThresholdLabel=new JLabel("Junction 2 Threshold : "+slider.getValue());
 			 this.componentPanel.add(this.measurementThresholdLabel);
 			 
 			

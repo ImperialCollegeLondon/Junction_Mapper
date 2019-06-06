@@ -127,7 +127,7 @@ public class MultiChannelImage extends JPanel {
 	 
 	 private void addMembraneTool(int n){
 		 this.membraneTool= new MembraneTool(ImageUtilities.getChannel(this.image, n),tool,this);
-		 tabbedPane.addTab("Channel "+(n+1)+" :: Membrane Tool",new JScrollPane(this.membraneTool));
+		 tabbedPane.addTab("Channel "+(n+1)+" :: Junction 1 Tool",new JScrollPane(this.membraneTool));
 	 }
 	 
 	 private void addMeasurementTool(int n){
